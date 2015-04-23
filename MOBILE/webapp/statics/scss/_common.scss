@@ -1,0 +1,80 @@
+@import "common/reset";
+@import "common/fn";
+html,body{
+	height: 100%;
+}
+.out-wrap {
+	max-width: 720px;
+	width: 100%;
+	margin: auto;
+	min-height: 100%;
+	padding-bottom: calcREM(40);
+}
+
+.out-wrap-blink{
+	background:url(../images/blinkBG.png);
+	background-size: contain;
+	min-height: 100%;
+	.blink-light{
+		position: absolute;
+		top: 0;
+		width: 100%;
+		img{
+			max-width: 100%;
+		}
+		.rule-link{
+			position: absolute;
+			top: 0;
+			right: 0;
+			img{
+				width: calcREM(130);
+			}
+		}
+	}
+}
+.button-wrap{
+	text-align: center;
+}
+.btn{
+	width: calcREM(648);
+	max-width: 90%;
+	margin: 0 auto 1em;
+	padding: 0;
+	background: #ff1b77;
+	color: #FFF;
+	border: none;
+	-webkit-border-radius: calcREM(18);
+	        border-radius: calcREM(18);
+	font-size: calcREM(36);
+	line-height: calcREM(88);
+}
+a.btn{
+	@include link-color(#FFF);
+	display: inline-block;
+	line-height: calcREM(88);
+	height: calcREM(88);
+}
+
+.overlay-box{
+	display: none;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	.overlay{
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		right: 0;
+		left: 0;
+		background: rgba(0,0,0,.6);
+		z-index: 999;
+	}
+	.o-b-content-wrap{
+		z-index: 1000;
+		position: absolute;
+		width: 100%;
+		overflow: hidden;
+	}
+}
