@@ -1,64 +1,6 @@
-// ---------------------------------------------------------------------------------------------------------------------
-// --- screen ----------------------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------------------------------
-
-@mixin screen($resMin, $resMax)
-{
-  @media screen and (min-width: $resMin) and (max-width: $resMax)
-  {
-    @content;
-  }
-}
-
-@mixin max-screen($res)
-{
-  @media screen and (max-width: $res)
-  {
-    @content;
-  }
-}
-
-@mixin min-screen($res)
-{
-  @media screen and (min-width: $res)
-  {
-    @content;
-  }
-}
-
-@mixin screen-height($resMin, $resMax)
-{
-  @media screen and (min-height: $resMin) and (max-height: $resMax)
-  {
-    @content;
-  }
-}
-
-@mixin max-screen-height($res)
-{
-  @media screen and (max-height: $res)
-  {
-    @content;
-  }
-}
-
-@mixin min-screen-height($res)
-{
-  @media screen and (min-height: $res)
-  {
-    @content;
-  }
-}
-
-/* set font  style */
-@mixin font($color, $fontSize:1rem) {
-    @if $color && type_of($color) == "color" {
-        color: $color;
-    }
-    font-size: $fontSize;
-}
 
 
+/* clear float */
 @mixin clearfix(){
     &:after{
         content: "";
@@ -70,19 +12,40 @@
     }
 }
 
+/**
+ * px -> em
+ * @param  {[type]} $size px size
+ * @return {[type]}       em size
+ */
 @function calcREM($size){
   $remSize : ($size/2)/16;
   @return #{$remSize}rem;
 }
 
-@mixin link-color($color:null) {
-    &:link {
-        color: $color;
-    }
-    &:visited {
-        color: $color;
-    }
-    &:active {
-        color: $color;
+/**
+ * sprite icon
+ * @param  {[type]} $iconName   [description]
+ * @param  {[type]} $path       [description]
+ * @param  {[type]} $retinaPath [description]
+ * @return {[type]}             [description]
+ */
+@mixin gen-sprite($iconName,$path,$retinaPath) {
+    
+    $icons: sprite-map($path, $layout: smart);
+    $icons-2x:sprite-map($retinaPath, $layout: smart);
+    
+    background-image: sprite-url($icons);
+    background-position: sprite-position($icons, $sprite);
+    background-repeat: no-repeat;
+    overflow: hidden;
+    display: block;
+    height: image-height(sprite-file($icons, $sprite));
+    width: image-width(sprite-file($icons, $sprite));
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+        background-image: sprite-url($icons-2x);
+        background-size: (image-width(sprite-path($icons-2x)) / 2) (image-height(sprite-path($icons-2x)) / 2);
+        background-position: round(nth(sprite-position($icons-2x, $sprite), 1) / 2) round(nth(sprite-position($icons-2x, $sprite), 2) / 2);
+        height: image-height(sprite-file($icons-2x, $sprite)) / 2;
+        width: image-width(sprite-file($icons-2x, $sprite)) / 2;
     }
 }
