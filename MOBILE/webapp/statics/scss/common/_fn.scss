@@ -24,12 +24,12 @@
 
 /**
  * sprite icon
- * @param  {[type]} $iconName   [description]
+ * @param  {[type]} $sprite   [iconName]
  * @param  {[type]} $path       [description]
  * @param  {[type]} $retinaPath [description]
  * @return {[type]}             [description]
  */
-@mixin gen-sprite($iconName,$path,$retinaPath) {
+@mixin gen-sprite($sprite,$path,$retinaPath) {
     
     $icons: sprite-map($path, $layout: smart);
     $icons-2x:sprite-map($retinaPath, $layout: smart);

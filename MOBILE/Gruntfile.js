@@ -6,7 +6,7 @@ module.exports = function(grunt) {
 
   var appConfig = {
     app: 'webapp',
-    build: 'build/',
+    build: 'build',
     statics: 'statics',
     tmp: '.tmp'
   };
@@ -38,11 +38,16 @@ module.exports = function(grunt) {
           cwd: '<%= super.app %>/<%= super.statics %>',
           src: ['**/*','!scss/**', '!bower_components/**', '!scripts/**'],
           dest: '<%= super.build %>/<%= super.statics %>/'
-        }, {
+        },{
           expand: true,
           cwd: '<%= super.app %>',
           src: ['**/*.html'],
-          dest: '<%= super.build %>/view'
+          dest: '<%= super.build %>'
+        },{
+          expand: true,
+          cwd: '<%= super.app %>/<%= super.statics %>/images',
+          src: ['**/*'],
+          dest: '<%= super.build %>/images'
         }]
       }
     },
@@ -114,7 +119,7 @@ module.exports = function(grunt) {
         sassDir: '<%= super.app %>/<%= super.statics %>/scss',
         cssDir: '<%= super.app %>/<%= super.statics %>/css',
         generatedImagesDir: '<%= super.tmp %>/<%= super.statics %>/images/generated',
-        imagesDir: '<%= super.app %>/<%= super.statics %>/images',
+        imagesDir: '<%= super.app %>/<%= super.statics %>/images-source',
         javascriptsDir: '<%= super.app %>/scripts',
         fontsDir: '<%= super.app %>/styles/fonts',
         httpImagesPath: '/<%= super.statics %>/images',
@@ -126,14 +131,14 @@ module.exports = function(grunt) {
       dist: {
         options: {
           cssDir: '<%= super.build %>/statics/css',
-          generatedImagesDir: '<%= super.dist %>/images/generated',
+          generatedImagesDir: '<%= super.build %>/images/generated',
           outputStyle: 'compressed'
         }
       },
       server: {
         options: {
           cssDir: '<%= super.tmp %>/<%= super.statics %>/css',
-          httpImagesPath: '/<%= super.statics %>/images',
+          httpImagesPath: '/<%= super.statics %>/images-source',
           httpGeneratedImagesPath: '<%= super.tmp %>/<%= super.statics %>/images/generated',
           debugInfo: true
         }
