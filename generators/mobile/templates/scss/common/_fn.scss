@@ -29,10 +29,10 @@
  * @param  {[type]} $retinaPath [description]
  * @return {[type]}             [description]
  */
-@mixin gen-sprite($sprite,$path,$retinaPath) {
+@mixin sprite($path,$sprite) {
     
-    $icons: sprite-map($path, $layout: smart);
-    $icons-2x:sprite-map($retinaPath, $layout: smart);
+    $icons: sprite-map($path+"/*.png", $layout: smart);
+    $icons-2x:sprite-map($path+"-2x/*.png", $layout: smart);
     
     background-image: sprite-url($icons);
     background-position: sprite-position($icons, $sprite);

@@ -1,0 +1,14 @@
+{
+  "name": "<%= projectName %>",
+  "version": "0.1.0",
+  "dependencies": {
+  	"SuperMobileLibary":"http://192.168.0.30:81/frontend/libary-mobile.git"<% if (SuperBrowserLibsModule) { %>,
+  	"SuperBrowserLibsModule":"http://192.168.0.30:81/frontend/SuperBrowserLibs.git"<% } %><% if (slipModule) { %>,
+  	"slip.binnng.js":"*"<% } %><% if (iscrollModule) { %>,
+  	"iscroll":"git://github.com/cubiq/iscroll.git"<% } %><% if (photoSwipeModule) { %>,
+  	"photoswipe":"~4.0"<% } %><% if (shakeModule) { %>,
+  	"shake.js":"*"<% } %>
+  },
+  "devDependencies": {
+  }
+}
