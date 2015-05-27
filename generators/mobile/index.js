@@ -105,7 +105,7 @@
 		var prompts = [{
 			type: 'checkbox',
 			name: 'modules',
-			message: '需要引入什么模块吗?',
+			message: '选择安装需要的库或控件，将会自动下载到根本目录下的 bower_components。\n 由于它存在较多的额外文件，所以请自行复制进 scripts/common 并引入到库',
 			choices: [{
 				value: 'SuperBrowserLibsModule',
 				name: 'SuperBrowserLibs 超级课程表客户端JSSDK',
@@ -149,9 +149,7 @@
 		this.template('root/_Gruntfile.js', 'Gruntfile.js');
 		this.template('root/_package.json', 'package.json');
 		this.template('root/_bower.json', 'bower.json');
-		this.template('root/_bowerrc', '.bowerrc', {
-			directory: join(this.appConfig.src, this.appConfig.statics, 'scripts', 'libs').replace(/\\/g, '\\\\')
-		});
+		this.template('root/_bowerrc', '.bowerrc');
 		this.template('root/README.md', 'README.md');
 	};
 
