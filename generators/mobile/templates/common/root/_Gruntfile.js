@@ -15,6 +15,7 @@ module.exports = function(grunt) {
     statics: '<%= appConfig.statics %>', //静态资源存放路径
     tmp: '.tmp', //临时目录路径
     cdn: '', // 静态文件CDN地址
+    api: '', // API的主机地址
   };
 
 
@@ -86,6 +87,10 @@ module.exports = function(grunt) {
             return [
               // 数据中间层
               // require('grunt-connect-proxy/lib/utils').proxyRequest,
+              function(req, res, next) {
+                res.setHeader('Access-Control-Allow-Origin', '*');
+                return next();
+              },
               connect.static(appConfig.tmp),
               connect.static(appConfig.app)
             ];
@@ -148,8 +153,8 @@ module.exports = function(grunt) {
     // 自动修复CSS前缀
     autoprefixer: {
       options: {
-         browsers: ['> 5%'],
-         cascade:false
+        browsers: ['> 5%'],
+        cascade: false
       },
       dist: {
         expand: true,
@@ -158,8 +163,48 @@ module.exports = function(grunt) {
         dest: '<%%= super.build %>/<%%= super.statics %>/css'
       }
     },
-
-    // 
+    /**
+     * 替换
+     * @type {Object}
+     */
+    replace: {
+      common: {
+        options: {
+          patterns: [{
+            match: /('")?\/?statics/g,
+            replacement: function() {
+              return '<%% = super.cdn %>/statics'; 
+            }
+          }, {
+            match: /(1[29][27]\.\w{0,3}\.\w?\.\w{0,3}:?\w+)/g,
+            replacement: function() {
+              return '<%% = super.api %>'; 
+            }
+          }]
+        },
+        files: [{
+          expand: true,
+          cwd: '<%= super.build %>/',
+          src: ['**/*.{js,html,css}'],
+          dest: '<%= super.build %>/'
+        }]
+      },
+      static_file_version: {
+        patterns: [{
+          match: /\.(js|css)/g,
+          replacement: function(q, m) {
+            return q + "?" + (+Date.now() / 1000).toFixed(0); // replaces "foo" to "bar"
+          }
+        }],
+        files: [{
+          expand: true,
+          cwd: '<%= super.build %>/',
+          src: ['**/*.{html}'],
+          dest: '<%= super.build %>/'
+        }]
+      }
+    },
+    // 线程任务
     concurrent: {
       server: [
         'clean:server',
