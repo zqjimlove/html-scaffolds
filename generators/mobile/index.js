@@ -22,6 +22,7 @@
 				statics: 'statics', //静态资源存放路径
 				tmp: '.tmp', //临时目录路径
 				cdn: '', // 静态文件CDN地址
+				api: '', // API地址
 			};
 		}
 	});
@@ -211,10 +212,16 @@
 			bower: true,
 			npm: true,
 			callback: function() {
+				_self._copySuperFile();
 				_self.on('end', function() {
 					this.log("\n\n" + chalk.bgGreen(chalk.dim('初始化成功，现在就去开发吧。')));
 				});
 			}
 		});
+	};
+
+	Super.prototype._copySuperFile = function _copySuperFile() {
+		this.copy(this.destinationPath(join('bower_components', 'SuperMobileLibary', 'dist', 'Super.js')), this.destinationPath(join(this.appConfig.src, this.appConfig.statics, 'scripts','common', 'Super.js')));
+		this.copy(this.destinationPath(join('bower_components', 'SuperMobileLibary', 'dist', 'Super.css')), this.destinationPath(join(this.appConfig.src, this.appConfig.statics, 'scss', 'common', '_super.scss')));
 	};
 })();

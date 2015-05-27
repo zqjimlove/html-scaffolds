@@ -15,7 +15,7 @@ module.exports = function(grunt) {
     statics: '<%= appConfig.statics %>', //静态资源存放路径
     tmp: '.tmp', //临时目录路径
     cdn: '', // 静态文件CDN地址
-    api: '', // API的主机地址
+    api: ''// API的主机地址
   };
 
 
@@ -92,7 +92,7 @@ module.exports = function(grunt) {
                 return next();
               },
               connect.static(appConfig.tmp),
-              connect.static(appConfig.app)
+              connect.static(appConfig.src)
             ];
           }
         }
@@ -184,9 +184,9 @@ module.exports = function(grunt) {
         },
         files: [{
           expand: true,
-          cwd: '<%= super.build %>/',
+          cwd: '<%%= super.build %>/',
           src: ['**/*.{js,html,css}'],
-          dest: '<%= super.build %>/'
+          dest: '<%%= super.build %>/'
         }]
       },
       static_file_version: {
@@ -198,9 +198,9 @@ module.exports = function(grunt) {
         }],
         files: [{
           expand: true,
-          cwd: '<%= super.build %>/',
+          cwd: '<%%= super.build %>/',
           src: ['**/*.{html}'],
-          dest: '<%= super.build %>/'
+          dest: '<%%= super.build %>/'
         }]
       }
     },
