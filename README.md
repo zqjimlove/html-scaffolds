@@ -2,13 +2,13 @@
 
 ## 安装
 
-```
+```sh
 npm install -g yo bower git+ssh://git@192.168.0.30:frontend/scaffolds.git
 ```
 
 ## 使用
 
-```
+```sh
 mkdir newProject && cd newProject
 yo super:mobile //移动端,桌面的暂时还木有!!!
 ```
@@ -23,7 +23,7 @@ Scss含有高清雪碧图、Flex布局等功能，详细的功能列表暂时木
 
 slip.js 是单屏翻页的，但在使用的时候应该延迟 500ms 插入。
 
-```
+```javascript
 setTimeout(function() {
         var slipJS = document.createElement("script");
         slipJS.src = "/statics/scripts/min.slip.js";
