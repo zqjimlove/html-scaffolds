@@ -10,8 +10,19 @@ npm install -g yo bower git+ssh://git@192.168.0.30:frontend/scaffolds.git
 
 ```sh
 mkdir newProject && cd newProject
-yo super:mobile //移动端,桌面的暂时还木有!!!
+
+# 移动端
+yo super:mobile 
+
+# 开发
+grunt serve
+
+# 编译部署
+# 需要设置gruntfile.js的appconfig中的API和CDN
+grunt build
+
 ```
+
 
 ## 注意事项
 

@@ -15,7 +15,7 @@ module.exports = function(grunt) {
     statics: '<%= appConfig.statics %>', //静态资源存放路径
     tmp: '.tmp', //临时目录路径
     cdn: '', // 静态文件CDN地址
-    api: ''// API的主机地址
+    api: '' // API的主机地址
   };
 
 
@@ -173,12 +173,12 @@ module.exports = function(grunt) {
           patterns: [{
             match: /('")?\/?statics/g,
             replacement: function() {
-              return '<%% = super.cdn %>/statics'; 
+              return '<%% = super.cdn %>/statics';
             }
           }, {
             match: /(1[29][27]\.\w{0,3}\.\w?\.\w{0,3}:?\w+)/g,
             replacement: function() {
-              return '<%% = super.api %>'; 
+              return '<%% = super.api %>';
             }
           }]
         },
@@ -224,13 +224,22 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('build', 'DEPRECATED TASK. Use the "serve" task instead', function(target) {
+    if (!appConfig.api || appConfig.api === '') {
+      console.error('请先设置AppConfig的API地址名。');
+      return;
+    }
+    if (!appConfig.cdn || appConfig.cdn === '') {
+      console.error('请先设置AppConfig的CDN地址。');
+      return;
+    }
     grunt.task.run([
       'clean:dist',
       // 'bower:dist',
       'copy:dist',
       'compass:dist',
       'autoprefixer:dist',
-      'uglify:dist'
+      'uglify:dist',
+      'replace'
     ]);
   });
 };
