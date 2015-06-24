@@ -4,6 +4,7 @@ module.exports = function(grunt) {
 
   require('load-grunt-tasks')(grunt);
   require('time-grunt')(grunt);
+  grunt.loadNpmTasks('grunt-replace');
   grunt.loadNpmTasks('grunt-autoprefixer');
 
   // 项目配置文件
@@ -15,7 +16,11 @@ module.exports = function(grunt) {
     statics: '<%= appConfig.statics %>', //静态资源存放路径
     tmp: '.tmp', //临时目录路径
     cdn: '', // 静态文件CDN地址
-    api: '' // API的主机地址
+    api: '', // API的主机地址
+    staging_config: {
+      cdn: '',
+      api: ''
+    }
   };
 
 
