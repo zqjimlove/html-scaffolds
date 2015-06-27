@@ -1,0 +1,31 @@
+%float-left-box{
+    float : left;  
+}
+
+%float-right-box{
+    float : right;  
+}
+
+%clearfix {
+    zoom:1;
+    &:after {
+        content: "";
+        display: block;
+        visibility: hidden;
+        height: 0;
+        clear: both
+    }
+}
+
+%display-none{
+    display: none !important;
+}
+
+/* Inline-block 兼容IE */
+%inline-block{
+    display: inline-block;
+    zoom: 1; *display: inline; /* IE < 8: fake inline-block */
+    letter-spacing: normal;
+    word-spacing: normal;
+    vertical-align: top;
+}
