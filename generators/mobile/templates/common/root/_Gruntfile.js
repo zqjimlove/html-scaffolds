@@ -246,8 +246,8 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', 'DEPRECATED TASK. Use the "serve" task instead', function(target) {
     if (!target || (target !== 'release' && target !== 'staging')) {
-      grunt.fail.fatal('请输入需编译版本 release 或 staging，如：grunt build:staging');
-      return;
+      console.log('默认使用staging');
+      target = 'staging';
     }
     var buildCnf = buildConfig[target];
     if (!buildCnf.api || buildCnf.api === '') {
