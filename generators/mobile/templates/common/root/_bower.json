@@ -10,5 +10,8 @@
   	"shake.js":"*"<% } %>
   },
   "devDependencies": {
+  },
+  "exportsOverride":{
+    <% if (iscrollModule){ %>"iscroll":{"js":"build/iscroll.js"}<% } %>
   }
 }

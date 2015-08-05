@@ -106,7 +106,7 @@
 		var prompts = [{
 			type: 'checkbox',
 			name: 'modules',
-			message: '选择安装需要的库或控件，将会自动下载到根本目录下的 bower_components。\n 由于它存在较多的额外文件，所以请自行复制进 scripts/common 并引入到库',
+			message: '选择安装需要的库或控件，将会自动下载到根本目录下的 bower_components。\n',
 			choices: [{
 				value: 'SuperBrowserLibsModule',
 				name: 'SuperBrowserLibs 超级课程表客户端JSSDK',
@@ -212,16 +212,10 @@
 			bower: true,
 			npm: true,
 			callback: function() {
-				_self._copySuperFile();
 				_self.on('end', function() {
 					this.log("\n\n" + chalk.bgGreen(chalk.dim('初始化成功，现在就去开发吧。')));
 				});
 			}
 		});
-	};
-
-	Super.prototype._copySuperFile = function _copySuperFile() {
-		this.copy(this.destinationPath(join('bower_components', 'SuperMobileLibary', 'dist', 'Super.js')), this.destinationPath(join(this.appConfig.src, this.appConfig.statics, 'scripts','common', 'Super.js')));
-		this.copy(this.destinationPath(join('bower_components', 'SuperMobileLibary', 'dist', 'Super.css')), this.destinationPath(join(this.appConfig.src, this.appConfig.statics, 'scss', 'common', '_super.scss')));
 	};
 })();

@@ -6,20 +6,26 @@ module.exports = function(grunt) {
   require('time-grunt')(grunt);
   grunt.loadNpmTasks('grunt-replace');
   grunt.loadNpmTasks('grunt-autoprefixer');
+  grunt.loadNpmTasks('grunt-bower-task');
 
   // 项目配置文件
   var appConfig = {
     projectName: '<%= projectName %>', //项目名称，用于二级目录
     src: '<%= appConfig.src %>', // 项目源代码
-    build: '<%= appConfig.build %>', // 项目线上编译版本
-    staging: "<%= appConfig.staging %>", // 项目测试服务器编译版本
     statics: '<%= appConfig.statics %>', //静态资源存放路径
     tmp: '.tmp', //临时目录路径
-    cdn: '', // 静态文件CDN地址
-    api: '', // API的主机地址
-    staging_config: {
+  };
+
+  var buildConfig = {
+    staging: { // 内网服务器
+      build: "<%= appConfig.staging %>",
       cdn: '',
       api: ''
+    },
+    release: { //线上配置
+      build: '<%= appConfig.build %>',
+      cdn: '', // 静态文件CDN地址
+      api: '' // API的主机地址
     }
   };
 
@@ -28,6 +34,17 @@ module.exports = function(grunt) {
   grunt.initConfig({
     //变量
     super: appConfig,
+
+    // bower 安装
+    bower: {
+      install: {
+        options: {
+          targetDir: '<%%= super.src %>/<%%= super.statics %>/scripts/lib',
+          layout: 'byComponent',
+          cleanTargetDir: true
+        }
+      }
+    },
 
     //复制文件
     copy: {
@@ -64,9 +81,8 @@ module.exports = function(grunt) {
           livereload: '<%%= connect.options.livereload %>'
         },
         files: [
-          '<%%= super.src %>/**/*.{html,jsp}',
-          '<%%= super.tmp %>/**/*.{css,png}',
-          '<%%= super.src %>/**/*.js'
+          '<%%= super.src %>/**/*.{html,jsp,js}',
+          '<%%= super.tmp %>/**/*.{css,png}'
         ]
       }
     },
@@ -121,7 +137,7 @@ module.exports = function(grunt) {
         },
         files: [{
           expand: true,
-          cwd: '<%%= super.build %>/<%%= super.statics %>/scripts',
+          cwd: '<%%= super.src %>/<%%= super.statics %>/scripts',
           src: ['**/*.js'],
           dest: '<%%= super.build %>/<%%= super.statics %>/scripts'
         }]
@@ -178,12 +194,12 @@ module.exports = function(grunt) {
           patterns: [{
             match: /('")?\/?statics/g,
             replacement: function() {
-              return '<%% = super.cdn %>/statics';
+              return appConfig.cdn + '/statics';
             }
           }, {
             match: /(1[29][27]\.\w{0,3}\.\w?\.\w{0,3}:?\w+)/g,
             replacement: function() {
-              return '<%% = super.api %>';
+              return appConfig.api;
             }
           }]
         },
@@ -213,7 +229,7 @@ module.exports = function(grunt) {
     concurrent: {
       server: [
         'clean:server',
-        // 'bower:install',
+        'bower:install',
         'compass:server'
       ]
     }
@@ -229,17 +245,31 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('build', 'DEPRECATED TASK. Use the "serve" task instead', function(target) {
-    if (!appConfig.api || appConfig.api === '') {
-      console.error('请先设置AppConfig的API地址名。');
+    if (!target || (target !== 'release' && target !== 'staging')) {
+      grunt.fail.fatal('请输入需编译版本 release 或 staging，如：grunt build:staging');
       return;
     }
-    if (!appConfig.cdn || appConfig.cdn === '') {
-      console.error('请先设置AppConfig的CDN地址。');
+    var buildCnf = buildConfig[target];
+    if (!buildCnf.api || buildCnf.api === '') {
+      grunt.fail.fatal('请先设置' + target + '的API地址名。');
       return;
     }
+    if (!buildCnf.cdn || buildCnf.cdn === '') {
+      grunt.fail.fatal('请先设置' + target + '的CDN地址。');
+      return;
+    }
+
+    appConfig.build = buildCnf.build;
+    appConfig.api = buildCnf.api;
+    appConfig.cdn = buildCnf.cdn;
+
+    grunt.initConfig({
+      super: appConfig
+    });
+
     grunt.task.run([
       'clean:dist',
-      // 'bower:dist',
+      'bower:install',
       'copy:dist',
       'compass:dist',
       'autoprefixer:dist',
