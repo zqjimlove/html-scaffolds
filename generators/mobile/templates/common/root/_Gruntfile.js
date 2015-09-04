@@ -117,6 +117,17 @@ module.exports = function(grunt) {
             ];
           }
         }
+      },
+      build: {
+        options: {
+          open: false,
+          keepalive: true,
+          middleware: function(connect) {
+            return [
+              connect.static(appConfig.build)
+            ];
+          }
+        }
       }
     },
     // 压缩 JS
@@ -236,12 +247,20 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('serve', 'DEPRECATED TASK. Use the "serve" task instead', function(target) {
-    grunt.task.run([
-      'concurrent:server',
-      // 'configureProxies:server',  // 数据层中间代理
-      'connect:livereload',
-      'watch'
-    ]);
+    if (!target || target == '' || (target !== 'release' && target !== 'staging')) {
+      grunt.task.run([
+        'concurrent:server',
+        // 'configureProxies:server',  // 数据层中间代理
+        'connect:livereload',
+        'watch'
+      ]);
+    } else {
+      grunt.config('super.build', buildConfig[target]['build']);
+      grunt.task.run([
+        'connect:build'
+      ]);
+    }
+
   });
 
   grunt.registerTask('build', 'DEPRECATED TASK. Use the "serve" task instead', function(target) {
@@ -263,9 +282,7 @@ module.exports = function(grunt) {
     appConfig.api = buildCnf.api;
     appConfig.cdn = buildCnf.cdn;
 
-    grunt.initConfig({
-      super: appConfig
-    });
+    grunt.config('super', appConfig);
 
     grunt.task.run([
       'clean:dist',
