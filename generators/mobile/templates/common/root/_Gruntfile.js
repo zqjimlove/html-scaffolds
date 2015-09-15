@@ -203,12 +203,12 @@ module.exports = function(grunt) {
       common: {
         options: {
           patterns: [{
-            match: /('")?\/?statics/g,
+            match: /('")?\/?statics\//g,
             replacement: function() {
-              return appConfig.cdn + '/statics';
+              return appConfig.cdn + '/statics/';
             }
           }, {
-            match: /(1[29][27]\.\w{0,3}\.\w?\.\w{0,3}:?\w+)/g,
+            match: /(1[29][27]\.\w{0,3}\.\w{0,3}\.\w{0,3}:?\w+)/g,
             replacement: function() {
               return appConfig.api;
             }
