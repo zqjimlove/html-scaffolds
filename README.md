@@ -19,7 +19,12 @@ grunt serve
 
 # 编译部署
 # 需要设置gruntfile.js的appconfig中的API和CDN
-grunt build
+
+# 编译内网测试版本
+grunt build:staging
+
+# 编译外网版本
+grunt build:release
 
 ```
 
