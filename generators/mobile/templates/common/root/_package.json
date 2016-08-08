@@ -1,21 +1,34 @@
 {
-  "name": "my-project-name",
+  "name": "<%= projectName %>",
   "version": "0.1.0",
   "devDependencies": {
-    "grunt": "~0.4.5",
-    "grunt-contrib-connect": "~0.10",
-    "grunt-connect-proxy": "~0.2",
-    "grunt-contrib-watch": "~0.6.1",
-    "grunt-contrib-compass": "~1.0",
-    "load-grunt-tasks": "^0.4.0",
-    "time-grunt": "^1.2",
-    "grunt-contrib-uglify":"~0.9",
-    "grunt-contrib-clean":"~0.6",
-    "grunt-contrib-copy":"~0.8",
-    "grunt-newer": "^1.1.0",
-    "grunt-concurrent": "^0.5.0",
-    "grunt-autoprefixer":"~3.0",
-    "grunt-replace":"~0.9",
-    "grunt-bower-task":"*"
+    "gulp": "*",
+    "gulp-bower": "*",
+    "gulp-changed": "*",
+    "gulp-clean": "*",
+    "gulp-clean-css": "*",
+    "gulp-connect": "*",
+    "gulp-copy": "*",
+    "gulp-html-minifier": "*",
+    "gulp-minify-css": "*",
+    "gulp-replace": "*",
+    "gulp-uglify": "*",
+    "main-bower-files": "*",
+    "proxy-middleware": "*",
+    "gulp-imagemin":"*",
+    "imagemin-pngquant":"*",
+    <% if(scss) { %>
+    "gulp-autoprefixer": "*",
+    "gulp-compass": "*",
+    <%}%>
+    <% if(postcss) { %>
+    "gulp-postcss": "*",
+    "autoprefixer": "*",
+    "precss": "*",
+    "cssnano":"*",
+    "postcss-utilities":"*",
+    "postcss-sprites":"*",
+    <%}%>
+    "yargs": "*"
   }
 }
