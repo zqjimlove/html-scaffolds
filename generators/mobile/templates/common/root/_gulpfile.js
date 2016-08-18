@@ -9,9 +9,6 @@ config.cdn = argv.cdn ? argv.cdn : false;
 
 gulp.projectConfig = config;
 
-gulp.task('test', function() {
-    console.log(path.join(gulp.projectConfig.getOutputStaticsPath(), '/**/**/*.js'));
-});
 
 
 /**
