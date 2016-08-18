@@ -1,0 +1,15 @@
+{
+  "name": "<%= projectName %>",
+  "version": "0.1.0",
+  "dependencies": {
+    <% if (slipModule) { %>,
+  	"slider-js":"*"<% } %><% if (photoSwipeModule) { %>,
+  	"photoswipe":"~4.0"<% } %><% if (shakeModule) { %>,
+  	"shake.js":"*"<% } %>
+  },
+  "devDependencies": {
+  },
+  "exportsOverride":{
+    
+  }
+}
