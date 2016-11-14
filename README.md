@@ -21,7 +21,7 @@ gulp serve
 gulp build 
 # 支持参数 
 # [--production] 生产环境，压缩所有文件。
-# [--cdn http://cdn.cn] CDN路径，会替换所有静态文件的引用路径，如: link="../staics/css/index.css" => link="http://cdn.cn/staics/css/index.css"
+# [--cdn http://cdn.cn/] CDN路径，会替换所有静态文件的引用路径，如: link="../staics/css/index.css" => link="http://cdn.cn/staics/css/index.css"
 ```
 
 
