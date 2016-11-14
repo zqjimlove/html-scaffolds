@@ -3,7 +3,7 @@
 ## 安装
 
 ```sh
-npm i -g yo bower git+ssh://git@192.168.0.30:frontend/scaffolds.git
+npm i -g yo bower git+ssh://git@github.com:zqjimlove/html-scaffolds.git
 ```
 
 ## 使用
